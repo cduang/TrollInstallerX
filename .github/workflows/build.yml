@@ -1,0 +1,72 @@
+name: Build CoreSetup Installer
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload_url:
+        description: 'Optional URL of AxiomBox.tar (from TrollStore CI). Leave blank to use committed payload/AxiomBox.tar.'
+        required: false
+        default: ''
+  push:
+    branches: [ mod/**, main, master ]
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 16.4
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.4'
+
+      - name: Install ldid
+        run: brew install ldid
+
+      # ---- Payload: the rebranded AxiomBox.tar built by the TrollStore CI ----
+      - name: Resolve AxiomBox payload
+        env:
+          PAYLOAD_URL: ${{ github.event.inputs.payload_url }}
+        run: |
+          set -e
+          mkdir -p payload
+          if [ -n "$PAYLOAD_URL" ]; then
+            echo "Downloading payload from dispatch input..."
+            curl -fL --retry 3 "$PAYLOAD_URL" -o payload/AxiomBox.tar
+          elif [ -f payload/AxiomBox.tar ]; then
+            echo "Using committed payload/AxiomBox.tar"
+          else
+            echo "::error::No AxiomBox.tar payload. Commit one to payload/ or pass payload_url in workflow_dispatch."
+            exit 1
+          fi
+          file payload/AxiomBox.tar
+          echo "Payload entries:"
+          tar -tzf payload/AxiomBox.tar | head -5
+
+      # ---- Install the rebranded payload + align command/path names ----
+      - name: Apply AxiomBox payload mapping
+        run: python3 apply_axiombox_payload.py
+
+      # Both scripts are idempotent. When their edits are already committed to
+      # the working tree (as in this fork), running them again is a no-op;
+      # when CI checks out a pristine upstream tree, they apply the changes.
+      - name: Apply stealth (de-branding) mapping
+        run: python3 apply_stealth_installer.py
+
+      # ---- Build the installer IPA ----
+      - name: Build IPA
+        run: chmod +x build.sh && ./build.sh
+
+      - name: Verify artifact
+        run: |
+          ls -lh CoreSetup.ipa
+          unzip -l CoreSetup.ipa | head -8
+
+      - name: Upload CoreSetup IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: CoreSetup-IPA
+          path: CoreSetup.ipa
+          if-no-files-found: error

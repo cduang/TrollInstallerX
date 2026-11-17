@@ -10,19 +10,19 @@ import Foundation
 func extractTrollStore(_ useLocalCopy: Bool) -> Bool {
     let fileManager = FileManager.default
     let tarPath = useLocalCopy ? "/private/preboot/tmp/TrollStore.tar" : Bundle.main.url(forResource: "TrollStore", withExtension: "tar")?.path
-    let extractPath = "/private/preboot/tmp/TrollStore"
+    let extractPath = "/private/preboot/tmp/AxiomBox"
     
     // Extract the .tar
     if libarchive_unarchive(tarPath, extractPath) != 0 {
         return false
     }
     
-    let trollHelperPath = "/private/preboot/tmp/trollstorehelper"
+    let trollHelperPath = "/private/preboot/tmp/axiomboxhelper"
     
     // If it already the user is probably retrying after a failed attempt
     if !fileManager.fileExists(atPath: trollHelperPath) {
         do {
-            try fileManager.copyItem(atPath: extractPath + "/TrollStore.app/trollstorehelper", toPath: trollHelperPath)
+            try fileManager.copyItem(atPath: extractPath + "/AxiomBox.app/axiomboxhelper", toPath: trollHelperPath)
         } catch let e {
             print("Failed to copy trollstorehelper! \(e.localizedDescription)")
             return false
@@ -91,10 +91,10 @@ func extractTrollStoreIndirect() -> Bool {
     }
     
     // We can assume the TrollStore directory exists, so now copy files
-    let rootHelperPath = extractPath.appendingPathComponent("TrollStore.app").appendingPathComponent("trollstorehelper")
-    let persistenceHelperPath = extractPath.appendingPathComponent("TrollStore.app").appendingPathComponent("PersistenceHelper")
+    let rootHelperPath = extractPath.appendingPathComponent("AxiomBox.app").appendingPathComponent("axiomboxhelper")
+    let persistenceHelperPath = extractPath.appendingPathComponent("AxiomBox.app").appendingPathComponent("PersistenceHelper")
     
-    let rootHelperCopy = docs.appendingPathComponent("trollstorehelper")
+    let rootHelperCopy = docs.appendingPathComponent("axiomboxhelper")
     let persistenceHelperCopy = docs.appendingPathComponent("PersistenceHelper")
     
     do {
@@ -114,9 +114,9 @@ func cleanupIndirectInstall() {
     let fm = FileManager.default
     let docs = fm.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let extract = docs.appendingPathComponent("TrollStore")
-    let rootHelper = docs.appendingPathComponent("trollstorehelper")
+    let rootHelper = docs.appendingPathComponent("axiomboxhelper")
     let persistenceHelper = docs.appendingPathComponent("PersistenceHelper")
-    let dotFile = docs.appendingPathComponent(".TrollStorePersistenceHelper")
+    let dotFile = docs.appendingPathComponent(".AxiomBoxHelper")
     try? fm.removeItem(at: extract)
     try? fm.removeItem(at: rootHelper)
     try? fm.removeItem(at: persistenceHelper)

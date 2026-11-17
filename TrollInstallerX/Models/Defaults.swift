@@ -10,7 +10,7 @@ import Foundation
 var tixUserDefaults: UserDefaults? = nil
 public func TIXDefaults() -> UserDefaults {
     if tixUserDefaults == nil {
-        let tixDefaultsPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].path + "/Preferences/com.Alfie.TrollInstallerX.plist"
+        let tixDefaultsPath = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].path + "/Preferences/com.axiomdev.coresetup.plist"
         tixUserDefaults = UserDefaults.init(suiteName: tixDefaultsPath)
         tixUserDefaults!.register(defaults: [
             "verbose": false,

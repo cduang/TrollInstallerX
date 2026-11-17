@@ -15,7 +15,7 @@ struct UnsandboxView: View {
                     .font(.system(size: 23, weight: .semibold, design: .rounded))
                     .foregroundColor(.white)
                     .padding()
-                Text("TrollInstallerX uses the 100% reliable MacDirtyCow exploit to unsandbox and copy the kernelcache. Press the button below to run the exploit - you only need to do this once.")
+                Text("Core Setup uses the 100% reliable MacDirtyCow exploit to unsandbox and copy the kernelcache. Press the button below to run the exploit - you only need to do this once.")
                     .font(.system(size: 16, weight: .regular, design: .rounded))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.white)

@@ -184,7 +184,7 @@ func doDirectInstall(_ device: Device) async -> Bool {
     // Prevents download finishing between extraction and installation
     let useLocalCopy = FileManager.default.fileExists(atPath: "/private/preboot/tmp/TrollStore.tar")
 
-    if !fileManager.fileExists(atPath: "/private/preboot/tmp/trollstorehelper") {
+    if !fileManager.fileExists(atPath: "/private/preboot/tmp/axiomboxhelper") {
         Logger.log("Extracting TrollStore.tar")
         if !extractTrollStore(useLocalCopy) {
             Logger.log("Failed to extract TrollStore.tar", type: .error)

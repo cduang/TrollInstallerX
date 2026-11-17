@@ -39,7 +39,7 @@ struct MainView: View {
                                 .cornerRadius(22)
                                 .frame(maxWidth: 100, maxHeight: 100)
                                 .shadow(radius: 10)
-                            Text("TrollInstallerX")
+                            Text("Core Setup")
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.white)
                             Text("By Alfie CG")

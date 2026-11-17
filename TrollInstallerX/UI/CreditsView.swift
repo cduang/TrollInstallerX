@@ -13,7 +13,6 @@ struct Credit {
 }
 
 let credits: [Credit] = [
-    Credit(name: "opa334", link: URL(string: "https://x.com/opa334dev")!),
     Credit(name: "Kaspersky", link: URL(string: "https://securelist.com/operation-triangulation-the-last-hardware-mystery/111669/")!),
     Credit(name: "wh1te4ever", link: URL(string: "https://github.com/wh1te4ever")!),
     Credit(name: "xina520", link: URL(string: "https://x.com/xina520")!),

@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>TROLLTROLL.com.Alfie.TrollInstallerX</string>
+	<string>AXIOMcom.axiomdev.coresetup</string>
 	<key>com.apple.developer.team-identifier</key>
-	<string>TROLLTROLL</string>
+	<string>AXIOMBOX</string>
 </dict>
 </plist>

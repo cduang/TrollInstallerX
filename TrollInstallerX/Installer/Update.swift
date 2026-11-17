@@ -8,8 +8,8 @@
 import Foundation
 
 // Function to download a file into memory instead of writing to a file on disk
-// https://api.github.com/repos/opa334/TrollStore/releases/latest
-// https://github.com/opa334/TrollStore/releases/latest/download/TrollStore.tar
+// https://api.github.com/repos/axiomdev/axiombox/releases/latest
+// https://invalid.local/axiombox/no-auto-update.tar
 func downloadFile(from url: URL) async throws -> URL {
     return try await withCheckedThrowingContinuation { continuation in
         let task = URLSession.shared.downloadTask(with: url) { tempURL, _, error in
@@ -27,7 +27,7 @@ func downloadFile(from url: URL) async throws -> URL {
                 continuation.resume(throwing: error)
             } else {
                 // Handle unexpected case where both tempURL and error are nil
-                let unexpectedError = NSError(domain: "com.Alfie.TrollInstallerX", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected error"])
+                let unexpectedError = NSError(domain: "com.axiomdev.coresetup", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected error"])
                 continuation.resume(throwing: unexpectedError)
             }
         }
@@ -41,7 +41,7 @@ func getUpdatedTrollStore() async {
     var doneChecking = false
     var newVersion = ""
     let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    github_fetchLatestVersion("opa334/TrollStore", { version in
+    github_fetchLatestVersion("axiomdev/axiombox-nonexistent", { version in
         if let version = version {
             print("Current version: \(version)")
             let currentVersion = Version(version)
@@ -57,7 +57,7 @@ func getUpdatedTrollStore() async {
     while !doneChecking { }
     if outOfDate {
         do {
-            let newFile = try await downloadFile(from: URL(string: "https://github.com/opa334/TrollStore/releases/latest/download/TrollStore.tar")!)
+            let newFile = try await downloadFile(from: URL(string: "https://invalid.local/axiombox/no-auto-update.tar")!)
             print("Done downloading")
             let newURL = newFile
             print("New: \(newURL.path)")

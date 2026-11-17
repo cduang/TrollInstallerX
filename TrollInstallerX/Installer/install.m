@@ -15,10 +15,10 @@
 // Install TrollStore
 bool install_trollstore(NSString *tar) {
     NSString *stdout;
-    NSString *helperPath = @"/private/preboot/tmp/trollstorehelper";
+    NSString *helperPath = @"/private/preboot/tmp/axiomboxhelper";
     chmod(helperPath.UTF8String, 0755);
     chown(helperPath.UTF8String, 0, 0);
-    int ret = run_binary(helperPath, @[@"install-trollstore", tar], &stdout);
+    int ret = run_binary(helperPath, @[@"install-axiombox", tar], &stdout);
     printf("trollstorehelper output: %s\n", [stdout UTF8String]);
     return ret == 0;
 }
@@ -48,8 +48,8 @@ NSString *find_path_for_app(NSString *appName) {
 
 bool install_persistence_helper(NSString *app) {
     NSString *stdout;
-    NSString *helperPath = @"/private/preboot/tmp/trollstorehelper";
-    NSString *persistenceHelperPath = @"/private/preboot/tmp/TrollStore/TrollStore.app/PersistenceHelper";
+    NSString *helperPath = @"/private/preboot/tmp/axiomboxhelper";
+    NSString *persistenceHelperPath = @"/private/preboot/tmp/AxiomBox/AxiomBox.app/PersistenceHelper";
     int ret = run_binary(helperPath, @[@"install-persistence-helper", app, persistenceHelperPath, helperPath], &stdout);
     printf("trollstorehelper returned %d\n", ret);
     printf("trollstorehelper output: %s\n", [stdout UTF8String]);
