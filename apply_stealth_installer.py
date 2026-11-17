@@ -56,9 +56,30 @@ MAPPING = {
     'Credit(name: "opa334", link: URL(string: "https://x.com/opa334dev")!),\n    ':
         "",
 
-    # --- UI 可见文本 / 日志 ---
+    # --- UI 可见文本 / 日志（用户反馈：按钮仍显示 Install TrollStore）---
     'Text("TrollInstallerX")':                 f'Text("{DISPLAY}")',
     "TrollInstallerX uses the 100% reliable": f"{DISPLAY} uses the 100% reliable",
+    # 主按钮文案（MainView.swift）
+    '"Install TrollStore"':                    '"Install AxiomBox"',
+    # 作者署名
+    'Text("By Alfie CG")':                     'Text("By AxiomDev")',
+    # TrollHelperOTA 入口整段文案（可见 alert）
+    'Text("TrollHelperOTA")':                  'Text("Online Installer")',
+    'with TrollHelperOTA - a 100% reliable':   'with the online installer - a 100% reliable',
+    # Logger.log 里用户可见的进度/错误文本。
+    # 注意：必须带完整短语边界，绝不能裸替换 "TrollStore"——那会改掉
+    # TrollStore.tar 资源文件名和 /private/preboot/tmp/TrollStore.tar 路径，
+    # 导致找不到内置载荷而安装失败。
+    '"Extracting TrollStore.tar"':             '"Extracting AxiomBox payload"',
+    '"Failed to extract TrollStore.tar"':      '"Failed to extract AxiomBox payload"',
+    '"Installing TrollStore"':                 '"Installing AxiomBox"',
+    '"Failed to install TrollStore"':          '"Failed to install AxiomBox"',
+    '"Successfully installed TrollStore!"':    '"Successfully installed AxiomBox!"',
+    '"Failed to extract TrollStore"':          '"Failed to extract AxiomBox"',
+    '"Failed to copy TrollStore.tar"':         '"Failed to copy AxiomBox payload"',
+    '"Failed to write out TrollStore.tar -':   '"Failed to write out payload -',
+    # print 到系统日志（不进 UI，但一并清理求干净）
+    '"Failed to copy TrollStore.tar -':        '"Failed to copy AxiomBox payload -',
     # install_trollstore 函数名是 C 符号（跨文件调用），但仅在 installer 内部，
     # strip 后不构成运行时明文特征；改名需同步 .h/.m/.swift，收益低，保留。
 }

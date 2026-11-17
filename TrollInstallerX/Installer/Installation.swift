@@ -177,7 +177,7 @@ func doDirectInstall(_ device: Device) async -> Bool {
             FileManager.default.createFile(atPath: "/private/preboot/tmp/TrollStore.tar", contents: nil)
             try data.write(to: URL(string: "file:///private/preboot/tmp/TrollStore.tar")!)
         } catch {
-            print("Failed to write out TrollStore.tar - \(error.localizedDescription)")
+            print("Failed to write out payload - \(error.localizedDescription)")
         }
     }
     
@@ -185,9 +185,9 @@ func doDirectInstall(_ device: Device) async -> Bool {
     let useLocalCopy = FileManager.default.fileExists(atPath: "/private/preboot/tmp/TrollStore.tar")
 
     if !fileManager.fileExists(atPath: "/private/preboot/tmp/axiomboxhelper") {
-        Logger.log("Extracting TrollStore.tar")
+        Logger.log("Extracting AxiomBox payload")
         if !extractTrollStore(useLocalCopy) {
-            Logger.log("Failed to extract TrollStore.tar", type: .error)
+            Logger.log("Failed to extract AxiomBox payload", type: .error)
             return false
         }
     }
@@ -210,11 +210,11 @@ func doDirectInstall(_ device: Device) async -> Bool {
         }
     }
     
-    Logger.log("Installing TrollStore")
+    Logger.log("Installing AxiomBox")
     if !install_trollstore(useLocalCopy ? "/private/preboot/tmp/TrollStore.tar" : Bundle.main.bundlePath + "/TrollStore.tar") {
-        Logger.log("Failed to install TrollStore", type: .error)
+        Logger.log("Failed to install AxiomBox", type: .error)
     } else {
-        Logger.log("Successfully installed TrollStore!", type: .success)
+        Logger.log("Successfully installed AxiomBox!", type: .success)
     }
     
     if !cleanupPrivatePreboot() {

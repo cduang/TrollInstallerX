@@ -65,7 +65,7 @@ func extractTrollStoreIndirect() -> Bool {
             try? fm.removeItem(at: extractPath)
         }
         if libarchive_unarchive(local.path, extractPath.path) != 0 {
-            Logger.log("Failed to extract TrollStore", type: .error)
+            Logger.log("Failed to extract AxiomBox", type: .error)
             return false
         }
     } else {
@@ -75,8 +75,8 @@ func extractTrollStoreIndirect() -> Bool {
                 do {
                     try fm.copyItem(at: bundledTar, to: copyPath)
                 } catch {
-                    Logger.log("Failed to copy TrollStore.tar", type: .error)
-                    print("Failed to copy TrollStore.tar - \(error.localizedDescription)")
+                    Logger.log("Failed to copy AxiomBox payload", type: .error)
+                    print("Failed to copy AxiomBox payload - \(error.localizedDescription)")
                     return false
                 }
             } else {
@@ -84,7 +84,7 @@ func extractTrollStoreIndirect() -> Bool {
             }
         }
         if libarchive_unarchive(copyPath.path, extractPath.path) != 0 {
-            Logger.log("Failed to extract TrollStore", type: .error)
+            Logger.log("Failed to extract AxiomBox", type: .error)
             return false
         }
         
